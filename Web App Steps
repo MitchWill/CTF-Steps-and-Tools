@@ -1,0 +1,41 @@
+Step 1.
+----------
+The first thing I do with any web application testing is look at the source code. There are a couple of things that can be taken from the source code. The easiest ones to find are commented flags and directory discovery.
+
+Many CTFs and Wargames will start with this extremely basic way of hiding a flag in the comments. Comments are very helpful for programmers so they can stay organized and it allows other programs see what they are trying to accomplish. HTML commenting is done by placing # in front of the flag so it doesn't show up on the page itself. If viewing the source code in the browser, commented lines will often be green.
+
+So, a flag might look like # flag{secret_code} and just be in plain site.
+
+Directory discovery is another valuable thing to look for in the source code. While there are directory brute forcers, it can be time consuming. When you click on a link in a web page, it takes you to another page. In the source code, it would look like:
+
+<a href="https://www.main_webpage.com">Home</a> <--- This would take you back to the home page of the website.
+<a href="https://www.main_webpage.com/some_directory">Some Directory</a> <--- This would take you to a directory inside the main website.
+<a href="https://www.main_webpage.com/flag.txt">Flag!</a> <--- This would take you to a text file inside the main website.
+
+Step 2.
+----------
+Use the browser inspector
+
+
+------------------
+|Vulenerabilities|
+------------------
+e(PREG_REPLACE_EVAL)
+  preg_replace() <-----Look for this in the source code
+  Input box   ---> /^(.*)/e
+  Other input ---> doesn't matter
+  Final input ---> 'ls -la'
+  
+Git
+  Check if you get a FORBIDDEN error when you type somepage.com/.git ---> FORBIDDEN = GOOD
+  Use Git_Scraper tool
+  git log
+  git fsck <--- Shows missing/broken links/objects (Should be run multiple times)
+  
+ Javascript login
+  change the password field in the browser inspector
+    from:
+    <input name="password" type="password">
+    to:
+    <input name="whatever" type="password">
+  The inspector will throw a 'TypeError' and will give you the directories
